@@ -1,2 +1,19 @@
 # Activity Tracker
+
 A python script to track your activities. Are you working on different project and you want to track the time you spend in them? Use this simple command line tool!
+
+---
+
+### Installation
+
+Download command line tool to your local machine:
+> `git clone git@github.com:cescobaz/activitytracker.git && cd activitytracker/python`
+
+---
+
+### Requirements
+
+* Python
+* sqlite3
+
+---
