@@ -17,3 +17,7 @@ Download command line tool to your local machine:
 * sqlite3
 
 ---
+
+### License
+
+The code is under the GNU General Public License v3
