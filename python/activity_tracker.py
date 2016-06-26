@@ -1,3 +1,11 @@
+###################################################
+###################################################
+#
+#	Activity Tracker
+#	by Francesco Burelli
+#
+###################################################
+###################################################
 import sys
 import re
 from activity_service import Service
@@ -21,7 +29,22 @@ def listactivities(args):
 		return service.activities()
 
 def helpf(args):
-	return "HELP: try"
+	return '''HELP:\n
+	\t- start, s [ACTIVITY]: start activity, if argument is missing then
+	\t\tlast activity starts (if any). If a different activity is running
+	\t\tthen this one will be stopped and the new one starts
+	
+	\t- stop: stop the current activity (if any)
+	
+	\t- list, l [group-by]: shows last activities grouped by \'gropu-by\'
+	\t\tthat can be \'day\', \'week\' \'month\' or \'year\'
+	
+	\t- help: shows this output
+	
+	\t- exit: exits from this application. If an activity is running then
+	\t\tit asks if you want to stop the current activity. You can exit from
+	\t\tthe application while an activity is running and stop it at next usage.\n
+				'''
 
 def askstopifneeds():
 	if (service.current_activity):
@@ -50,6 +73,7 @@ actions = {
 	"list"	:	listactivities,
 	"l"		:	listactivities,
 	"help"	:	helpf,
+	"h"		:	helpf,
 	"exit"	:	exit
 }
 
