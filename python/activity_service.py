@@ -89,6 +89,7 @@ class Service:
 		result_string += "INFO: " + activity + " started at " + date.isoformat()
 		return result_string
 	
+	# stop the current activity if exist
 	def stop(self):
 		if (self.current_activity == None):
 			return "ERROR: no activity to stop"
