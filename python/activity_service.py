@@ -114,7 +114,7 @@ class Service:
 	#	week
 	#	month (30 days)
 	#	year  (360 days)
-	def activities(self, mode='all', limit=10):
+	def activities(self, mode='all', limit=100):
 		interval = 60 * 60 * 24 * 360 * 100
 		if (mode == 'day'):
 			interval = 60 * 60 * 24
