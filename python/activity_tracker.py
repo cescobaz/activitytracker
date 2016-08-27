@@ -11,23 +11,20 @@ import re
 from activity_service import Service
 
 service = Service("activities.db")
-		
-def start(args):
-	activity = None
-	if (len(args) > 0):
-		activity = args[0]
-	
-	return service.start(activity)
 
+# start activity
+def start(args):
+	return service.start(*args)
+
+# stop activity
 def stop(args):
 	return service.stop()
 
+# show activities
 def listactivities(args):
-	if (len(args) > 0):
-		return service.activities(args[0])
-	else:
-		return service.activities()
+	return service.activities(*args)
 
+# show help output
 def helpf(args):
 	return '''HELP:\n
 	\t- start, s [ACTIVITY]: start activity, if argument is missing then
@@ -45,9 +42,9 @@ def helpf(args):
 	\t\tit asks if you want to stop the current activity. You can exit from
 	\t\tthe application while an activity is running and stop it at next usage.\n
 				'''
-
+# ask to stop current acitivity
 def askstopifneeds():
-	if (service.current_activity):
+	if service.current_activity:
 		# ask to stop the current activity
 		while (True):
 			print ('Q: do you want to stop the current acrivity named "' + service.current_activity + '"? [Y/N]')
@@ -60,12 +57,14 @@ def askstopifneeds():
 			elif (command_line == "n\n" or command_line == "N\n"):
 				break
 
+# exit application (ask to stop activity if needs)
 def exit(args):
 	askstopifneeds()
 	
 	service.dispose()
 	sys.exit()
-	
+
+# map command string with function
 actions = {
 	"start" :	start,
 	"s"		:	start,
@@ -77,20 +76,26 @@ actions = {
 	"exit"	:	exit
 }
 
-while (True):
+# start main loop: ask for the command and execute it
+while True:
+	# print usage
 	print ("Q: Commands: start [ACTIVITY], stop, help, exit")
 	
-	command_line = sys.stdin.readline()
+	# read the command line and remove return char
+	command_line = sys.stdin.readline()[:-1]
 	
-	command = re.split("[ ,\n]", command_line)
-	
-	if (command.count == 0):
+	# check it is not null
+	if len(command_line) == 0:
 		continue
 	
+	# split the command line
+	command = re.split("[ ]+", command_line)
+	
+	# search the command
 	action = actions.get(command[0])
 	
-	if (action):
-		del command[0]
-		print (action(command))
+	if action:
+		# execute the command with arguments
+		print (action(command[1:]))
 	else:
 		print ("ERROR: unknown command")
