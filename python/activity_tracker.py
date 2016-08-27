@@ -63,6 +63,11 @@ def exit(args):
 	
 	service.dispose()
 	sys.exit()
+	
+# exit application (ask to stop activity if needs)
+def exit_immediately(args):
+	service.dispose()
+	sys.exit()
 
 # map command string with function
 actions = {
@@ -73,7 +78,8 @@ actions = {
 	"l"		:	listactivities,
 	"help"	:	helpf,
 	"h"		:	helpf,
-	"exit"	:	exit
+	"exit"	:	exit,
+	"exit!"	:	exit_immediately
 }
 
 # start main loop: ask for the command and execute it
