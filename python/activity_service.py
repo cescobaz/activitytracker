@@ -143,6 +143,7 @@ class Service:
 		result = self._cursor.execute(
 			"""SELECT activity, SUM(end_time - start_time) as duration, start_time/? as s_time
 			FROM activities 
+			WHERE end_time IS NOT NULL
 			GROUP BY activity, s_time
 			ORDER BY start_time DESC 
 			LIMIT ?""", (interval,limit))
@@ -154,15 +155,14 @@ class Service:
 			row = result.fetchone()
 			if row is None:
 				break
-			if row[1] is None:
+			if self.current_activity is not None and row[0] == self.current_activity:
 				result_string.append("\t{activity_name}\t\t\t(current)".format(activity_name=str(row[0])))
-			else:
-				if s_time != row[2] and row[2] is not None:
-					s_time = row[2]
-					date = datetime.fromtimestamp(s_time * interval)
-					result_string.append("\t --- from: {date} ---".format(date=date.isoformat()))
-				
-				result_string.append("\t{activity_name}\t\t\t{duration}".format(activity_name=str(row[0]),duration=Service._durationstring(row[1])))
+			if s_time != row[2] and row[2] is not None:
+				s_time = row[2]
+				date = datetime.fromtimestamp(s_time * interval)
+				result_string.append("\t --- from: {date} ---".format(date=date.isoformat()))
+			
+			result_string.append("\t{activity_name}\t\t\t{duration}".format(activity_name=str(row[0]),duration=Service._durationstring(row[1])))
 				
 		return "\n".join(result_string)
 	
