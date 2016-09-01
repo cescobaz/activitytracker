@@ -150,13 +150,14 @@ class Service:
 		result_string = []
 		result_string.append("### activities ###")
 		s_time = None
-		# format rows
+		# if exist, print the current_activity
+		if self.current_activity is not None:
+			result_string.append("\t{activity_name}\t\t\t(current)".format(activity_name=self.current_activity))
+		#if there are records in the database, print the duration for each activity
 		while True:
 			row = result.fetchone()
 			if row is None:
 				break
-			if self.current_activity is not None and row[0] == self.current_activity:
-				result_string.append("\t{activity_name}\t\t\t(current)".format(activity_name=str(row[0])))
 			if s_time != row[2] and row[2] is not None:
 				s_time = row[2]
 				date = datetime.fromtimestamp(s_time * interval)
