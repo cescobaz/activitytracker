@@ -7,8 +7,11 @@ A python script to track your activities. Are you working on different project a
 ### Installation
 
 Download command line tool to your local machine:
-> `git clone https://github.com/cescobaz/activitytracker.git && cd activitytracker/python`
-> `python activity_tracker.py`
+
+```
+git clone https://github.com/cescobaz/activitytracker.git && cd activitytracker/python
+python activity_tracker.py
+```
 
 ---
 
